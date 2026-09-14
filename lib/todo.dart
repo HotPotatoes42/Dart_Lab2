@@ -21,7 +21,8 @@ class Todo {
     String status = isDone ? '[x]' : '[ ]';
     return '$status $id. $title';
   }
-  void complete(){
+
+  void complete() {
     isDone = true;
   }
 }

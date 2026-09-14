@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:lab2_buharev/todo.dart';
 
 void main() {
@@ -6,4 +8,52 @@ void main() {
   task1.complete();
   print(task1);
   print(task2);
+
+  stdout.write('Введите что-нибудь: ');
+  String? input = stdin.readLineSync();
+  print('Вы ввели: $input');
+}
+
+void addTodo(List<Todo> todos) {
+  stdout.write('Название задачи: ');
+  String? input = stdin.readLineSync();
+
+  if (input == null || input.trim().isEmpty) {
+    print('Ошибка: название не может быть пустым');
+    return;
+  }
+
+  int newId = todos.isEmpty ? 1 : todos.last.id + 1;
+  todos.add(Todo(id: newId, title: input.trim()));
+  print('Задача добавлена!');
+
+  void listTodos(List<Todo> todos) {
+    if (todos.isEmpty) {
+      print('Список задач пуст');
+      return;
+    }
+    print('');
+    for (var todo in todos) {
+      print(todo);
+    }
+    void completeTodo(List<Todo> todos) {
+      stdout.write('ID задачи: ');
+      String? input = stdin.readLineSync();
+
+      if (input == null) return;
+
+      int? id = int.tryParse(input.trim());
+      if (id == null) {
+        print('Ошибка введите число');
+        return;
+      }
+      for (var todo in todos) {
+        if (todo.id == id) {
+          todo.complete();
+          print('Задача отмечена выполненной!');
+          return;
+        }
+      }
+    }
+  }
 }
